@@ -1,9 +1,11 @@
-#include <stdio.h>
+#include <iostream>
+using namespace std;
+int main() {
+	double a, b;
+	cin >> a >> b;
+	cout << fixed;
+	cout.precision(9);
+	cout << a / b;
 
-int main(void)
-{
-    int a, b;
-    scanf("%d %d", &a, &b);
-    printf("%.9lf\n", (double)a/b);
-    return 0;
+	return 0;
 }
