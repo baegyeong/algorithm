@@ -12,7 +12,7 @@ function solution(n, edge) {
         vertex[index].push(value);
         vertex[value].push(index);
     }
-    
+
     bfs(1)
     
     function bfs(x){
@@ -22,7 +22,7 @@ function solution(n, edge) {
             let y = queue.shift();
             for(let i of vertex[y]){
                 if(!visited[i]){
-                    result[i]=result[y]+result[i]+1
+                    result[i]=result[y]+1
                     queue.push(i)
                     visited[i]=true
                 }
