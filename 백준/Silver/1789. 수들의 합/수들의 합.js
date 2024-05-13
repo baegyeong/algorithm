@@ -1,13 +1,12 @@
 const fs = require("fs");
-const input = fs.readFileSync("/dev/stdin").toString().split("\n");
+const input = Number(fs.readFileSync("/dev/stdin").toString().split("\n")[0]);
 
-let n = Number(input[0]);
-let sum = 0;
+let answer = 0;
 let current = 0;
-
-while (sum <= n) {
+while (true) {
+  if (answer > input) break;
   current += 1;
-  sum += current;
+  answer += current;
 }
 
 console.log(current - 1);
