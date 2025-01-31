@@ -1,60 +1,54 @@
 const fs = require("fs");
-let input = fs.readFileSync("/dev/stdin").toString().split("\n");
+const input = fs.readFileSync("/dev/stdin").toString().split("\n");
 
-const t = Number(input[0]);
+const T = +input[0];
 input.shift();
 
-let arr = [];
-let visited = [];
+const directions = [
+  [1, 0],
+  [0, 1],
+  [-1, 0],
+  [0, -1],
+];
+const answer = Array(T).fill(0);
 
-const dx = [0, 0, -1, 1];
-const dy = [-1, 1, 0, 0];
+for (let i = 0; i < T; i++) {
+  let count = 0;
 
-function dfs(x, y) {
-  visited[x][y] = true;
-  for (let i = 0; i < 4; i++) {
-    const xplus = x + dx[i];
-    const yplus = y + dy[i];
-    const node = [xplus, yplus];
-    if (
-      xplus >= 0 &&
-      yplus >= 0 &&
-      arr.some((x) => x[0] === node[0] && x[1] === node[1]) &&
-      !visited[xplus][yplus]
-    ) {
-      dfs(xplus, yplus);
-    }
-  }
-}
-
-let result = 0;
-let answer = [];
-
-for (let j = 0; j < t; j++) {
-  const [m, n, k] = input[0].split(" ").map(Number);
+  const [M, N, K] = input[0].split(" ").map(Number);
+  const graph = Array.from({ length: N }, () => Array(M).fill(0));
+  const visited = Array.from({ length: N }, () => Array(M).fill(false));
   input.shift();
 
-  for (let w = 0; w < k; w++) {
-    const [a, b] = input[w].split(" ").map(Number);
-    arr.push([a, b]);
+  for (let j = 0; j < K; j++) {
+    const [X, Y] = input[j].split(" ").map(Number);
+    graph[Y][X] = 1;
   }
 
-  for (let i = 0; i < m; i++) visited[i] = [false];
+  input.splice(0, K);
 
-  for (let i = 0; i < k; i++) {
-    const x = arr[i][0];
-    const y = arr[i][1];
-    if (!visited[x][y]) {
-      dfs(arr[i][0], arr[i][1]);
-      result += 1;
+  function DFS(x, y) {
+    visited[y][x] = true;
+
+    for (const [dx, dy] of directions) {
+      const nx = dx + x;
+      const ny = dy + y;
+
+      if (nx < 0 || nx >= M || ny < 0 || ny >= N) continue;
+      if (!visited[ny][nx] && graph[ny][nx] === 1) {
+        DFS(nx, ny);
+      }
     }
   }
 
-  answer.push(result);
-  result = 0;
-  arr = [];
-  visited = [];
-  input.splice(0, k);
+  for (let k = 0; k < N; k++) {
+    for (let v = 0; v < M; v++) {
+      if (!visited[k][v] && graph[k][v] === 1) {
+        answer[i] = ++count;
+        DFS(v, k);
+      }
+    }
+  }
 }
 
 console.log(answer.join("\n"));
