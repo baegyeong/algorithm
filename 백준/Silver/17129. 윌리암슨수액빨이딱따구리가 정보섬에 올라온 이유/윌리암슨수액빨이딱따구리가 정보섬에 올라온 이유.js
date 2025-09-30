@@ -35,16 +35,17 @@ while (queue.length) {
     if (nx < 0 || nx >= n || ny < 0 || ny >= m || visited[nx][ny] > 1) continue;
 
     const target = graph[nx][ny];
+
     if (target === 1) continue;
+
+    visited[nx][ny] += visited[x][y];
+
     if (target === 0) {
-      visited[nx][ny] += visited[x][y];
       queue.push([nx, ny]);
       continue;
     }
     if (target === 3 || target === 4 || target === 5) {
-      visited[nx][ny] += visited[x][y] - 1;
-
-      answer = visited[nx][ny];
+      answer = visited[nx][ny] - 1;
       break;
     }
   }
