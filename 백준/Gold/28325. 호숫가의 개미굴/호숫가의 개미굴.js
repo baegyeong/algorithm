@@ -2,40 +2,29 @@ const fs = require("fs");
 const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
 const N = +input[0];
-const arr = input[1].split(" ").map(BigInt);
+let arr = input[1].split(" ").map(Number);
 
-const dp = Array.from({ length: N }, () => 0n);
-
-if (!arr[1] && arr[2]) {
-  dp[0] = arr[0];
-} else {
-  dp[0] = arr[0] > 1n ? arr[0] : 1n;
+if (arr.every((item) => item === 0)) {
+  console.log(Math.floor(N / 2));
+  return;
 }
 
-if (!arr[0] && dp[0]) {
-  dp[1] = dp[0] + arr[1];
-} else {
-  dp[1] = dp[0] + 1n > dp[0] + arr[1] ? dp[0] + 1n : dp[0] + arr[1];
-}
+let total = arr.reduce((v, i) => v + i, 0);
+const start = arr.findIndex((item) => item === 1);
+arr = arr.slice(start + 1).concat(arr.slice(0, start + 1));
 
-for (let i = 2; i < N; i++) {
-  if (i === N - 1) {
-    if ((dp[i - 1] !== dp[i - 2] && !arr[i - 1]) || (dp[0] && !arr[0])) {
-      dp[i] = dp[i - 1] + arr[i];
-    } else {
-      dp[i] =
-        dp[i - 1] + arr[i] > dp[i - 1] + 1n
-          ? dp[i - 1] + arr[i]
-          : dp[i - 1] + 1n;
-    }
-  } else if (arr[i]) {
-    dp[i] = dp[i - 1] + arr[i];
-  } else if (arr[i - 1]) {
-    dp[i] =
-      dp[i - 1] + 1n > dp[i - 1] + arr[i] ? dp[i - 1] + 1n : dp[i - 1] + arr[i];
-  } else {
-    dp[i] = dp[i - 2] + 1n > dp[i - 1] ? dp[i - 2] + 1n : dp[i - 1];
+const dp = Array({ length: N }).fill(0);
+
+for (let i = 0; i < N; i++) {
+  if (arr[i] || dp[i]) continue;
+
+  let j = i;
+  for (; j < N; j++) {
+    if (arr[j]) break;
+    dp[j] = 1;
   }
+
+  total += Math.floor((j - i + 1) / 2);
 }
 
-console.log(dp[N - 1].toString());
+console.log(total);
