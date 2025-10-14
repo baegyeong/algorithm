@@ -1,5 +1,5 @@
 const fs = require("fs");
-const input = fs.readFileSync("/dev/stdin").toString().split("\n");
+const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
 const N = +input[0];
 const arr = input[1].split(" ").map(Number);
@@ -17,6 +17,8 @@ for (let i = 2; i < N; i++) {
   if (arr[i - 1]) {
     dp[i] = Math.max(dp[i - 1] + 1, dp[i - 1] + arr[i]);
   } else if (arr[i]) {
+    dp[i] = dp[i - 1] + arr[i];
+  } else if (i === N - 1 && dp[0]) {
     dp[i] = dp[i - 1] + arr[i];
   } else {
     dp[i] = Math.max(dp[i - 2] + 1, dp[i - 1]);
