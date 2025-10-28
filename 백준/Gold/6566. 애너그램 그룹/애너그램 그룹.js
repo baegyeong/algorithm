@@ -3,7 +3,7 @@ const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
 const anagram = {};
 
-const sortWord = (word) => word.split("").sort();
+const sortWord = (word) => word.split("").sort().join("");
 
 for (const word of input) {
   const sortedWord = sortWord(word);
