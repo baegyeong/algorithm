@@ -25,9 +25,9 @@ function union(a, b) {
   const rootA = find(a);
   const rootB = find(b);
   if (rootA < rootB) {
-    parent[rootB] = rootA;
-  } else {
     parent[rootA] = rootB;
+  } else {
+    parent[rootB] = rootA;
   }
 }
 
