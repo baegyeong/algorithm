@@ -7,7 +7,6 @@ const [N, M] = fs
   .map(Number);
 
 const sequence = [];
-const arr = Array.from({ length: N }, (_, i) => i + 1);
 const visited = new Array(N).fill(false);
 
 function func(x) {
@@ -19,7 +18,7 @@ function func(x) {
   for (let i = 0; i < N; i++) {
     if (!visited[i]) {
       visited[i] = true;
-      sequence.push(arr[i]);
+      sequence.push(i + 1);
       func(x + 1);
       visited[i] = false;
       sequence.pop();
