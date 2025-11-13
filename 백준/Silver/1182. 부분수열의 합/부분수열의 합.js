@@ -2,10 +2,7 @@ const fs = require("fs");
 const input = fs.readFileSync("/dev/stdin").toString().split("\n");
 
 const [N, S] = input[0].split(" ").map(Number);
-const arr = input[1]
-  .split(" ")
-  .map(Number)
-  .sort((a, b) => a - b);
+const arr = input[1].split(" ").map(Number);
 
 let result = 0;
 
