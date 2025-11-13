@@ -1,27 +1,27 @@
 const fs = require("fs");
-const input = fs.readFileSync("/dev/stdin").toString().split("\n");
+const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
-let [l, c] = input[0].split(" ").map(Number);
-let arr = input[1].split(" ").sort();
+const [L, C] = input[0].split(" ").map(Number);
+const alphabet = input[1].split(" ").sort();
+const answer = [];
 
-let answer = [];
+const vowel = ["a", "e", "i", "o", "u"];
 
-let isVowels = (x) =>
-  x === "a" || x === "e" || x === "i" || x === "o" || x === "u";
+function dfs(str, index) {
+  if (index === C + 1) return;
+  if (str.length === L) {
+    const vowelLength = str
+      .split("")
+      .filter((item) => vowel.includes(item)).length;
+    if (vowelLength === 0) return;
+    if (L - vowelLength < 2) return;
 
-function back(str, depth) {
-  if (str.length === l) {
-    let vowels = str.split("").filter((x) => isVowels(x)).length;
-    let consonants = l - vowels;
-
-    if (consonants > 1 && vowels > 0) answer.push(str);
+    answer.push(str);
     return;
-  } else {
-    for (let i = depth + 1; i < c; i++) {
-      back(str + arr[i], i);
-    }
   }
+  dfs(str + alphabet[index], index + 1);
+  dfs(str.replace(alphabet[index], ""), index + 1);
 }
 
-back("", -1);
+dfs("", 0);
 console.log(answer.join("\n"));
