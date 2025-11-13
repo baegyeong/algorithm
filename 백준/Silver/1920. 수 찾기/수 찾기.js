@@ -1,25 +1,37 @@
-const input = require('fs').readFileSync('/dev/stdin').toString().trim().split('\n');
+const fs = require("fs");
+const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
-const [N, A, M, B] = input.map(v => v.split(" ").map(x => Number(x)));
+const N = +input[0];
+const A = input[1]
+  .split(" ")
+  .map(Number)
+  .sort((a, b) => a - b);
+const arr = input[3].split(" ").map(Number);
 
-A.sort((a, b) => a - b);
+const result = [];
 
-const binarySearch = (list, target, left, right, mid) => {
-  mid = Math.floor((left + right) / 2);
+for (const x of arr) {
+  let start = 0;
+  let end = N - 1;
+  let mid = 0;
+  let isFind = false;
 
-  if (right < left) {
-    return list[mid] == target ? 1 : 0;
+  while (start <= end) {
+    if (A[mid] === x) {
+      isFind = true;
+      result.push(1);
+      break;
+    }
+
+    mid = parseInt((start + end) / 2);
+    if (x < A[mid]) {
+      end = mid - 1;
+    } else if (x > A[mid]) {
+      start = mid + 1;
+    }
   }
 
-  if (list[mid] > target) {
-    right = mid - 1;
-  } else {
-    left = mid + 1;
-  }
-
-  return binarySearch(list, target, left, right, mid);
+  if (!isFind) result.push(0);
 }
-
-const result = B.map(v => binarySearch(A, v, 0, A.length - 1, 0));
 
 console.log(result.join("\n"));
