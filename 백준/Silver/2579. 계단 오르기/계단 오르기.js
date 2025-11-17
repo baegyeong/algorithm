@@ -1,25 +1,15 @@
 const fs = require("fs");
-const [N, ...input] = fs
-  .readFileSync("/dev/stdin")
-  .toString()
-  .trim()
-  .split("\n")
-  .map(Number);
+const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
-const dp = new Array(N + 1).fill(0);
-const total = input.reduce((acc, cur) => acc + cur, 0);
+const n = +input[0];
+const arr = [0, ...input.slice(1).map(Number)];
+const dp = Array.from({ length: n + 1 }).fill(0);
 
-if (N <= 2) {
-  console.log(total);
-  return;
+if (n >= 1) dp[1] = arr[1];
+if (n >= 2) dp[2] = arr[1] + arr[2];
+
+for (let i = 3; i <= n; i++) {
+  dp[i] = Math.max(dp[i - 3] + arr[i - 1] + arr[i], dp[i - 2] + arr[i]);
 }
 
-dp[1] = input[0];
-dp[2] = input[1];
-dp[3] = input[2];
-
-for (let i = 4; i <= N - 1; i++) {
-  dp[i] = Math.min(dp[i - 2], dp[i - 3]) + input[i - 1];
-}
-
-console.log(total - Math.min(dp[N - 1], dp[N - 2]));
+console.log(dp[n]);
