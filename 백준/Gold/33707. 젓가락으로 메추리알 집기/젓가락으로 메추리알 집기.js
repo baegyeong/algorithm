@@ -20,7 +20,7 @@ function move(query) {
   const firstLine = await readLineOnce();
   const [N, M] = firstLine.split(" ").map(Number);
 
-  let start = (N * M) & 1;
+  let start = (N * M) % 2 === 0 ? 0 : 1;
 
   for (let i = 1; i <= N; i++) {
     for (let j = 1 + start; j <= M; j += 2) {
