@@ -47,7 +47,7 @@ function makeAnswer(picked, minSum) {
   for (const p of picked) {
     const [x, y] = input[p];
     const add = Math.min(y - x, remain);
-    result[p] += input[p][0] + add;
+    result[p] += x + add;
     remain -= add;
   }
 
