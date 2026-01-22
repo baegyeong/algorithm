@@ -7,7 +7,7 @@ const input = require("fs")
 const [d, firstWord] = input.shift().split(" ");
 
 const queue = [firstWord];
-const visited = new Set();
+const visited = new Set([firstWord]);
 
 const filteredWord = (word, comparedWord) => {
   let i = 0,
@@ -39,9 +39,8 @@ while (queue.length) {
   }
 
   for (const target of input) {
-    if (word === target) continue;
-    if (target.length !== word.length + 1) continue;
     if (visited.has(target)) continue;
+    if (target.length !== word.length + 1) continue;
 
     const isSuccess = filteredWord(word.split(""), target.split(""));
     if (isSuccess) {
