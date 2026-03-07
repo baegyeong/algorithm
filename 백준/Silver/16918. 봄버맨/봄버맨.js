@@ -43,12 +43,13 @@ function printBoard(board) {
   console.log(board.map((item) => item.join("")).join("\n"));
 }
 
+if (N % 2 === 0) {
+  printBoard(allBomb);
+  return;
+}
+
 for (let i = 3; i <= N; i += 2) {
   bomb();
 }
 
-if (N % 2 === 0) {
-  printBoard(allBomb);
-} else {
-  printBoard(board);
-}
+printBoard(board);
