@@ -11,16 +11,6 @@ const [R, C, N] = input[0].split(" ").map(Number);
 let board = input.slice(1).map((line) => line.split(""));
 let allBomb = Array.from({ length: R }, () => Array(C).fill("O"));
 
-const state = Array.from({ length: R }, () => Array(C).fill(-1));
-
-for (let i = 0; i < R; i++) {
-  for (let j = 0; j < C; j++) {
-    if (board[i][j] === "O") {
-      state[i][j] = 0;
-    }
-  }
-}
-
 const directions = [
   [0, 1],
   [1, 0],
