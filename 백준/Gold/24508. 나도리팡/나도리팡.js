@@ -25,4 +25,4 @@ while (left < right) {
   if (input[right] === K) right--;
 }
 
-console.log(input[left] === K || (input[left] === 0 && T >= 0) ? "YES" : "NO");
+console.log((input[left] === K || input[left] === 0) && T >= 0 ? "YES" : "NO");
