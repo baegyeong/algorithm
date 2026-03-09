@@ -18,48 +18,33 @@ const directions = [
   [0, 1],
 ];
 
-let node;
-
-function findStartPosition() {
-  if (
-    (tracks[0][0] === "#" && tracks[1][0] === "#") ||
-    (tracks[0][N - 1] === "#" && tracks[1][N - 1] === "#")
-  )
-    return false;
-
-  if (tracks[0][0] === "#") {
-    node = bfs([[1, 0, 0]]);
-    return [1, 0];
-  }
-  if (tracks[1][0] === "#") {
-    node = bfs([[0, 0, 0]]);
-    return [0, 0];
-  }
-
-  const first = bfs([[0, 0, 0]]);
-  const second = bfs([[1, 0, 0]]);
-
-  if (first[2] > second[2]) {
-    node = second;
-    return [1, 0];
-  } else {
-    node = first;
-    return [0, 0];
-  }
-}
-
 function isObstacle(x, y) {
   return tracks[x][y] === "#";
 }
 
 function moveTrack() {
-  const start = findStartPosition();
-  if (!start) return -1;
+  if (isObstacle(0, 0) && isObstacle(1, 0)) return -1;
 
-  const [startX, startY] = start;
+  const results = [];
 
-  if (!node) return -1;
-  const [lastX, lastY, count] = node;
+  if (!isObstacle(0, 0)) {
+    const result = bfs(0);
+    if (result) {
+      results.push([0, ...result]);
+    }
+  }
+
+  if (!isObstacle(1, 0)) {
+    const result = bfs(1);
+    if (result) {
+      results.push([1, ...result]);
+    }
+  }
+
+  if (results.length === 0) return -1;
+  results.sort((a, b) => a[2] - b[2]);
+
+  const [startX, lastX, count] = results[0];
 
   if (startX === lastX) {
     return count * K + (K - 1);
@@ -69,24 +54,24 @@ function moveTrack() {
     return count;
   }
 
-  if (isObstacle(lastX ^ 1, lastY) && isObstacle(startX ^ 1, startY)) {
+  if (isObstacle(lastX ^ 1, N - 1) && isObstacle(startX ^ 1, 0)) {
     return -1;
   }
 
   return count * K + (K - 1) * 2;
 }
 
-function bfs(queue) {
+function bfs(startX) {
   const visited = Array.from({ length: MAX_ROW }, () => Array(N).fill(false));
+  const queue = [[startX, 0, 0]];
 
-  const [startX, startY] = queue[0];
-  visited[startX][startY] = true;
+  visited[startX][0] = true;
 
   while (queue.length) {
-    const [x, y, count] = queue.shift();
+    const [x, y, dist] = queue.shift();
 
     if (y === N - 1) {
-      return [x, y, count];
+      return [x, dist];
     }
 
     for (const [dx, dy] of directions) {
@@ -97,11 +82,11 @@ function bfs(queue) {
       if (isObstacle(nx, ny) || visited[nx][ny]) continue;
 
       visited[nx][ny] = true;
-      queue.push([nx, ny, count + 1]);
+      queue.push([nx, ny, dist + 1]);
     }
   }
 
-  return false;
+  return null;
 }
 
 console.log(moveTrack());
