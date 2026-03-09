@@ -11,7 +11,6 @@ const hypertube = Array.from({ length: N + 1 }, () => []);
 const visited = Array(N + 1).fill(false);
 
 for (let i = 0; i < M; i++) {
-  input[i] = input[i].sort((a, b) => b - a);
   for (const station of input[i]) {
     hypertube[station].push(i);
   }
