@@ -1,33 +1,58 @@
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 
-const [[N, M, X], ...input] = require("fs")
+const [[N, M, X], ...edges] = require("fs")
   .readFileSync(filePath)
   .toString()
   .trim()
   .split("\n")
-  .map((line) => line.split(" ").map(Number));
+  .map((v) => v.split(" ").map(Number));
 
-const dist = Array.from({ length: N + 1 }, () => Array(N + 1).fill(Infinity));
+const graph = Array.from({ length: N + 1 }, () => []);
+const reverseGraph = Array.from({ length: N + 1 }, () => []);
 
-for (const [a, b, t] of input) {
-  dist[a][b] = t;
+for (const [a, b, t] of edges) {
+  graph[a].push([b, t]);
+  reverseGraph[b].push([a, t]);
 }
 
-for (let k = 1; k <= N; k++) {
+function dijkstra(start, graph) {
+  const dist = Array(N + 1).fill(Infinity);
+  const visited = Array(N + 1).fill(false);
+
+  dist[start] = 0;
+
   for (let i = 1; i <= N; i++) {
+    let min = Infinity;
+    let curr = -1;
+
     for (let j = 1; j <= N; j++) {
-      if (dist[i][k] + dist[k][j] < dist[i][j]) {
-        dist[i][j] = dist[i][k] + dist[k][j];
+      if (!visited[j] && dist[j] < min) {
+        min = dist[j];
+        curr = j;
+      }
+    }
+
+    if (curr === -1) break;
+
+    visited[curr] = true;
+
+    for (const [next, w] of graph[curr]) {
+      if (dist[curr] + w < dist[next]) {
+        dist[next] = dist[curr] + w;
       }
     }
   }
+
+  return dist;
 }
 
-const minDist = Array(N + 1).fill(0);
+const distFromX = dijkstra(X, graph);
+const distToX = dijkstra(X, reverseGraph);
+
+let answer = 0;
 
 for (let i = 1; i <= N; i++) {
-  minDist[i] = dist[i][X] + dist[X][i];
+  answer = Math.max(answer, distFromX[i] + distToX[i]);
 }
 
-minDist[X] = 0;
-console.log(Math.max(...minDist));
+console.log(answer);
