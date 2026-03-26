@@ -1,13 +1,13 @@
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 
-const [[L, N, K], input] = require("fs")
+const lines = require("fs")
   .readFileSync(filePath)
   .toString()
   .trim()
-  .split("\n")
-  .map((line) => line.split(" ").map(Number));
+  .split("\n");
 
-input.sort((a, b) => a - b);
+const [L, N, K] = lines[0].split(" ").map(BigInt);
+const input = lines[1].split(" ").map(BigInt);
 
 const queue = [];
 const result = [];
@@ -16,7 +16,7 @@ let head = 0;
 let remaining = K;
 
 for (const x of input) {
-  queue.push([x, 0]);
+  queue.push([x, 0n]);
   visited.add(x);
 }
 
@@ -26,14 +26,14 @@ while (head < queue.length) {
   result.push(dist);
   remaining--;
 
-  if (remaining === 0) break;
+  if (remaining === 0n) break;
 
-  for (const dx of [-1, 1]) {
+  for (const dx of [-1n, 1n]) {
     const nx = target + dx;
 
-    if (nx >= 0 && nx <= L && !visited.has(nx)) {
+    if (nx >= 0n && nx <= L && !visited.has(nx)) {
       visited.add(nx);
-      queue.push([nx, dist + 1]);
+      queue.push([nx, dist + 1n]);
     }
   }
 }
