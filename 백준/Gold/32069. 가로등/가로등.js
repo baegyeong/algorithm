@@ -7,6 +7,8 @@ const [[L, N, K], input] = require("fs")
   .split("\n")
   .map((line) => line.split(" ").map(Number));
 
+input.sort((a, b) => a - b);
+
 const queue = [];
 const result = [];
 const visited = new Set();
