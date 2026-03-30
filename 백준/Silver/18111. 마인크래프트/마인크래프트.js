@@ -7,11 +7,14 @@ const [[N, M, B], ...input] = require("fs")
   .split("\n")
   .map((line) => line.split(" ").map(Number));
 
-const standard = Math.max(...input.flat());
+const heights = input.flat();
+const maxHeight = Math.max(...heights);
+const minHeight = Math.min(...heights);
+
 let minTime = Infinity;
 let height = 0;
 
-for (let h = standard; h >= 0; h--) {
+for (let h = maxHeight; h >= minHeight; h--) {
   let neededBlock = 0;
   let inventory = B;
   let time = 0;
