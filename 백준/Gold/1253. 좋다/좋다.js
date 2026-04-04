@@ -1,34 +1,43 @@
-const fs = require("fs");
-const input = fs.readFileSync("/dev/stdin").toString().split("\n");
+const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 
-const N = +input[0];
-const arr = input[1]
-  .split(" ")
-  .map(Number)
-  .sort((a, b) => a - b);
+const [[N], input] = require("fs")
+  .readFileSync(filePath)
+  .toString()
+  .trim()
+  .split("\n")
+  .map((line) => line.split(" ").map(Number));
 
-let count = 0;
+input.sort((a, b) => a - b);
+
+let answer = 0;
 
 for (let i = 0; i < N; i++) {
-  const sum = arr[i];
+  const target = input[i];
 
-  let start = 0;
-  let end = N - 1;
+  let left = 0,
+    right = N - 1;
 
-  while (start < end) {
-    if (arr[start] + arr[end] === sum) {
-      if (start === i) start += 1;
-      else if (end === i) end -= 1;
-      else {
-        count++;
-        break;
-      }
-    } else if (arr[start] + arr[end] > sum) {
-      end -= 1;
-    } else if (arr[start] + arr[end] < sum) {
-      start += 1;
+  while (left < right) {
+    if (left === i) {
+      left++;
+      continue;
+    }
+    if (right === i) {
+      right--;
+      continue;
+    }
+
+    const sum = input[left] + input[right];
+
+    if (target === sum) {
+      answer++;
+      break;
+    } else if (target > sum) {
+      left++;
+    } else {
+      right--;
     }
   }
 }
 
-console.log(count);
+console.log(answer);
