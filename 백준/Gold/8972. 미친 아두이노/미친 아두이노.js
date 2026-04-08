@@ -84,8 +84,6 @@ for (let turn = 0; turn < directions.length; turn++) {
 
   checkSamePosition(targetX, targetY, turn);
 
-  const removeCrazy = [];
-
   for (let crazyX = 0; crazyX < R; crazyX++) {
     for (let crazyY = 0; crazyY < C; crazyY++) {
       if (board[crazyX][crazyY][1] > 1) {
