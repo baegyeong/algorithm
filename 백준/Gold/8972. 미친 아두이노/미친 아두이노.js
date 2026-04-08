@@ -89,13 +89,9 @@ for (let turn = 0; turn < directions.length; turn++) {
   for (let crazyX = 0; crazyX < R; crazyX++) {
     for (let crazyY = 0; crazyY < C; crazyY++) {
       if (board[crazyX][crazyY][1] > 1) {
-        removeCrazy.push([crazyX, crazyY]);
+        board[crazyX][crazyY] = [".", 0];
       }
     }
-  }
-
-  for (const [removeX, removeY] of removeCrazy) {
-    board[removeX][removeY] = [".", 0];
   }
 }
 
