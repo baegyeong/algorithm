@@ -7,13 +7,6 @@ const [[N, M], ...input] = require("fs")
   .split("\n")
   .map((line) => line.split(" ").map(Number));
 
-const graph = Array.from({ length: N + 1 }, () => []);
-
-for (const [u, v] of input) {
-  graph[u].push(v);
-  graph[v].push(u);
-}
-
 const parent = Array.from({ length: N + 1 }, (_, i) => i);
 
 function find(x) {
