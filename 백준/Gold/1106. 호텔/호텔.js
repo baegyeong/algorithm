@@ -9,25 +9,19 @@ const [[C, N], ...input] = require("fs")
 
 const MAX = C + 100;
 
-const dp = Array.from({ length: N + 1 }, () => Array(MAX + 1).fill(Infinity));
+const dp = Array(MAX + 1).fill(Infinity);
 
-dp[0][0] = 0;
+dp[0] = 0;
 
-for (let i = 1; i <= N; i++) {
-  const [W, V] = input[i - 1];
-
-  for (let j = 0; j <= MAX; j++) {
-    dp[i][j] = dp[i - 1][j];
-
-    if (j >= V) {
-      dp[i][j] = Math.min(dp[i][j - V] + W, dp[i][j]);
-    }
+for (const [W, V] of input) {
+  for (let j = V; j <= MAX; j++) {
+    dp[j] = Math.min(dp[j], dp[j - V] + W);
   }
 }
 
 let answer = Infinity;
 for (let i = C; i <= MAX; i++) {
-  answer = Math.min(answer, dp[N][i]);
+  answer = Math.min(answer, dp[i]);
 }
 
 console.log(answer);
