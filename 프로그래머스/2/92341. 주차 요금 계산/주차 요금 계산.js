@@ -6,9 +6,9 @@ function solution(fees, records) {
     function calculateFee(totalTime){
         if(totalTime<=defaultTime){
             return defaultFee
-        }else{
-            return defaultFee + Math.ceil((totalTime-defaultTime)/unitTime)*unitFee
         }
+        
+        return defaultFee + Math.ceil((totalTime-defaultTime)/unitTime)*unitFee
     }   
     
     records.forEach(record=>{
