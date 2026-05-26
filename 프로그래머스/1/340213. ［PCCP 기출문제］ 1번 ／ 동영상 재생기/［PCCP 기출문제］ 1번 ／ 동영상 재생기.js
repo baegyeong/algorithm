@@ -1,9 +1,11 @@
+const getTotalSecond = (timeStr) => {
+    const [min, sec] = timeStr.split(":").map(Number)
+    return min * 60 + sec
+}
+
+const formatTime = (timeNum) => timeNum.toString().padStart(2, 0)
+
 function solution(video_len, pos, op_start, op_end, commands) {
-    const getTotalSecond = (timeStr) => {
-        const [min, sec] = timeStr.split(":").map(Number)
-        return min * 60 + sec
-    }
-    
     const totalVideo = getTotalSecond(video_len)
     const totalOpStart = getTotalSecond(op_start)
     const totalOpEnd = getTotalSecond(op_end)
@@ -23,7 +25,7 @@ function solution(video_len, pos, op_start, op_end, commands) {
     
     currentTime = action.isOpening(currentTime)
     
-    const resultMin = Math.floor((currentTime / 60)).toString().padStart(2, 0)
-    const resultSec = (currentTime % 60).toString().padStart(2, 0)
+    const resultMin = formatTime(Math.floor(currentTime / 60))
+    const resultSec = formatTime(currentTime % 60)
     return `${resultMin}:${resultSec}`
 }
