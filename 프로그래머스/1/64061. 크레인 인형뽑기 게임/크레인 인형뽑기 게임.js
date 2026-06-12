@@ -16,15 +16,15 @@ function solution(board, moves) {
     }
 
     if (flag) continue;
-
-    stack.push(board[idx][move - 1]);
-    board[idx][move - 1] = 0;
-
-    if (stack[stack.length - 1] === stack[stack.length - 2]) {
-      stack.pop();
-      stack.pop();
-      answer += 2;
+      
+    if(stack[stack.length-1] === board[idx][move-1]) {
+        stack.pop()
+        answer += 2
+    }else{
+        stack.push(board[idx][move - 1]);    
     }
+
+    board[idx][move - 1] = 0;
   }
 
   return answer;
