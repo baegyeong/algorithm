@@ -8,7 +8,7 @@ function solution(n, infection, edges, k) {
            return
        }
         
-        const openPipe = edges.filter(edge => edge[2] === pipe).sort((a,b)=>a[0]-b[0])
+        const openPipe = edges.filter(edge => edge[2] === pipe)
         const samePipe = []
         for(const target of openPipe){
             const [x, y] = target
