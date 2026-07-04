@@ -19,8 +19,7 @@ function solution(gems) {
             if(gemsCount[gems[j]] === 0){
                 jewelryCount++
             }
-            gemsCount[gems[j]] += 1
-            j++
+            gemsCount[gems[j++]] += 1
         }
         
         if(jewelryCount < size && j === gems.length) break;
