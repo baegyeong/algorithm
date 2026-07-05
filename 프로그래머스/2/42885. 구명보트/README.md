@@ -1,14 +1,14 @@
 # [level 2] 구명보트 - 42885 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42885?language=javascript#) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42885) 
 
 ### 성능 요약
 
-메모리: 38.1 MB, 시간: 13.15 ms
+메모리: 50.9 MB, 시간: 17.49 ms
 
 ### 구분
 
-코딩테스트 연습 > 탐욕법（Greedy）
+ > 
 
 ### 채점결과
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 04월 09일 23:56:21
+2026년 07월 06일 01:19:31
 
 ### 문제 설명
 
