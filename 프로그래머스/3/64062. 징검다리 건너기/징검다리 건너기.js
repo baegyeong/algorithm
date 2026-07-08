@@ -3,7 +3,6 @@ function solution(stones, k) {
     let left=0
     let right = stones.reduce((max, cur) => Math.max(max, cur), 0)
 
-
     function canCross(mid){
         let result = 0
         let distance = 0
@@ -22,13 +21,13 @@ function solution(stones, k) {
         
     }
     
-    while(left<=right){
+    while(left<right){
         const mid = parseInt((left+right)/2)
         
-        if(canCross(mid)<k){
-            left = mid+1
+        if(canCross(mid)>=k){
+            right=mid
         } else{
-            right = mid-1
+            left = mid +1
         }
     }
     
